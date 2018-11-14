@@ -38,7 +38,7 @@ def main():
     map_height = 45
     
     # number of rooms and size
-    room_max_size = 10
+    room_max_size = 12
     room_min_size = 6
     max_rooms = 30
 
