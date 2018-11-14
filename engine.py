@@ -21,7 +21,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 '''
 
 import libtcodpy as libtcod
-from input_handlers import handle_keys
+from src.input_handlers import handle_keys
+from src.entity import Entity
+from src.render_functions import clear_all, render_all
+from src.game_map import GameMap
 
 
 def main():
@@ -29,8 +32,20 @@ def main():
     screen_width = 80
     screen_height = 50
 
-    player_x = int(screen_width / 2)
-    player_y = int(screen_height / 2)
+    # map size
+    map_width = 80
+    map_height = 45
+
+    # These colors serve as walls and ground outside the field of view when I arrive there
+    # (hence the "darkness" in the names).
+    colors = {
+        'dark_wall': libtcod.Color(0, 0, 100),
+        'dark_ground': libtcod.Color(50, 50, 150)
+    }
+
+    player = Entity(int(screen_width / 2), int(screen_height / 2), '@', libtcod.white)
+    npc = Entity(int(screen_width / 2 - 5), int(screen_height / 2), '@', libtcod.yellow)
+    entities = [npc, player]
 
     # libtcod font to use. The bit 'arial10x10.png'
     # is the file from which it reads characters and symbols.
@@ -44,25 +59,24 @@ def main():
     
     con = libtcod.console_new(screen_width, screen_height)
 
+    # initialize the game map.
+    # This can go anywhere before the main cycle;
+    # I put my own under the initialization of the console.
+    game_map = GameMap(map_width, map_height)
+
     key = libtcod.Key()
     mouse = libtcod.Mouse()
 
     # game loop
     while not libtcod.console_is_window_closed():
         libtcod.sys_check_for_event(libtcod.EVENT_KEY_PRESS, key, mouse)
-
-        # sets the color for the '@' symbol. The "0" in this function is the console on which it draws.
-        # The first argument is '0' (again, the console on which it draws).
-        # The next two are the x and y coordinates, in this case 1 and 1.
-        # Next, I print the symbol '@' and set the background to 'none' with libtcod.BKGND_NONE.
-        libtcod.console_set_default_foreground(con, libtcod.white)
-        libtcod.console_put_char(con, player_x, player_y, '@', libtcod.BKGND_NONE)
-        libtcod.console_blit(con, 0, 0, screen_width, screen_height, 0, 0, 0)
+        
+        # functions to assist drawing the entities
+        render_all(con, entities, game_map, screen_width, screen_height, colors)
         
         libtcod.console_flush()
 
-        #libtcod.console_put_char(0, player_x, player_y, '@', libtcod.BKGND_NONE)
-        libtcod.console_put_char(con, player_x, player_y, ' ', libtcod.BKGND_NONE)
+        clear_all(con, entities)
 
         action = handle_keys(key)
 
@@ -72,15 +86,14 @@ def main():
 
         if move:
             dx, dy = move
-            player_x += dx
-            player_y += dy
+        if not game_map.is_blocked(player.x + dx, player.y + dy):
+            player.move(dx, dy)
 
         if exit:
             return True
 
         if fullscreen:
             libtcod.console_set_fullscreen(not libtcod.console_is_fullscreen())
-            return True
 
 if __name__ == '__main__':
      main()
