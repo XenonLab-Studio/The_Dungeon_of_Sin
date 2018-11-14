@@ -45,5 +45,5 @@
 
 Open a terminal window, and navigate to your Downloads directory: <br>
 1. **$ git clone https://github.com/XenonLab-Studio/The_Dungeon_of_Sin.git** <br>
-2. **$ cd the-dungeon-of-sin** <br>
+2. **$ cd The_Dungeon_of_Sin** <br>
 3. **$ python3 run.py** <br>
