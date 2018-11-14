@@ -25,6 +25,7 @@ from src.input_handlers import handle_keys
 from src.entity import Entity
 from src.render_functions import clear_all, render_all
 from src.game_map import GameMap
+from src.render_functions import clear_all, render_all
 
 
 def main():
@@ -56,7 +57,7 @@ def main():
     # along with a title for the window, and a Boolean value that tells libtcod whether
     # to go in fullscreen mode or not.
     libtcod.console_init_root(screen_width, screen_height, 'The Dungeon of Sin', False)
-    
+
     con = libtcod.console_new(screen_width, screen_height)
 
     # initialize the game map.
@@ -70,10 +71,10 @@ def main():
     # game loop
     while not libtcod.console_is_window_closed():
         libtcod.sys_check_for_event(libtcod.EVENT_KEY_PRESS, key, mouse)
-        
+
         # functions to assist drawing the entities
         render_all(con, entities, game_map, screen_width, screen_height, colors)
-        
+
         libtcod.console_flush()
 
         clear_all(con, entities)
@@ -86,14 +87,16 @@ def main():
 
         if move:
             dx, dy = move
-        if not game_map.is_blocked(player.x + dx, player.y + dy):
-            player.move(dx, dy)
+
+            if not game_map.is_blocked(player.x + dx, player.y + dy):
+                player.move(dx, dy)
 
         if exit:
             return True
 
         if fullscreen:
             libtcod.console_set_fullscreen(not libtcod.console_is_fullscreen())
+
 
 if __name__ == '__main__':
      main()
