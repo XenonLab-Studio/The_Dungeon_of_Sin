@@ -17,17 +17,20 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 '''
 
-class Tile:
-    """
-    A tile on a map. It may or may not be blocked, and may or may not block sight.
-    """
-    def __init__(self, blocked, block_sight=None):
-        self.blocked = blocked
 
-        # By default, if a tile is blocked, it also blocks sight
-        if block_sight is None:
-            block_sight = blocked
+import libtcodpy as libtcod
 
-        self.block_sight = block_sight
 
-        self.explored = False
+def initialize_fov(game_map):
+    fov_map = libtcod.map_new(game_map.width, game_map.height)
+
+    for y in range(game_map.height):
+        for x in range(game_map.width):
+            libtcod.map_set_properties(fov_map, x, y, not game_map.tiles[x][y].block_sight,
+                                       not game_map.tiles[x][y].blocked)
+
+    return fov_map
+
+def recompute_fov(fov_map, x, y, radius, light_walls=True, algorithm=0):
+    libtcod.map_compute_fov(fov_map, x, y, radius, light_walls, algorithm)
+

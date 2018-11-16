@@ -26,6 +26,7 @@ from src.entity import Entity
 from src.render_functions import clear_all, render_all
 from src.game_map import GameMap
 from src.render_functions import clear_all, render_all
+from src.fov_functions import initialize_fov, recompute_fov
 
 
 def main():
@@ -42,11 +43,18 @@ def main():
     room_min_size = 6
     max_rooms = 30
 
+    # FOV (Field of View)
+    fov_algorithm = 0          # is just the default libtcod algorithm.
+    fov_light_walls = True     # says whether or not to "light up" walls.
+    fov_radius = 10            # is the radius of the player's view.
+
     # These colors serve as walls and ground outside the field of view when I arrive there
     # (hence the "darkness" in the names).
     colors = {
         'dark_wall': libtcod.Color(0, 0, 100),
-        'dark_ground': libtcod.Color(50, 50, 150)
+        'dark_ground': libtcod.Color(50, 50, 150),
+        'light_wall': libtcod.Color(130, 110, 50),
+        'light_ground': libtcod.Color(200, 180, 50)
     }
 
     player = Entity(int(screen_width / 2), int(screen_height / 2), '@', libtcod.white)
@@ -71,6 +79,12 @@ def main():
     game_map = GameMap(map_width, map_height)
     game_map.make_map(max_rooms, room_min_size, room_max_size, map_width, map_height, player)
 
+    # It's true by default,
+    # because we have to calculate it correctly at the start of the game.
+    fov_recompute = True
+
+    fov_map = initialize_fov(game_map)
+
     key = libtcod.Key()
     mouse = libtcod.Mouse()
 
@@ -78,8 +92,13 @@ def main():
     while not libtcod.console_is_window_closed():
         libtcod.sys_check_for_event(libtcod.EVENT_KEY_PRESS, key, mouse)
 
+        if fov_recompute:
+            recompute_fov(fov_map, player.x, player.y, fov_radius, fov_light_walls, fov_algorithm)
+
         # functions to assist drawing the entities
-        render_all(con, entities, game_map, screen_width, screen_height, colors)
+        render_all(con, entities, game_map, fov_map, fov_recompute, screen_width, screen_height, colors)
+
+        fov_recompute = False
 
         libtcod.console_flush()
 
@@ -96,6 +115,9 @@ def main():
 
             if not game_map.is_blocked(player.x + dx, player.y + dy):
                 player.move(dx, dy)
+
+                # edit the section where we move the player to set fov_recompute to True.
+                fov_recompute = True
 
         if exit:
             return True
