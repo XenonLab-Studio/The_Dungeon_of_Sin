@@ -39,9 +39,8 @@
 
 ### Installation of libraries
 
-1. **$ sudo apt-get update** <br>
-2. **$ sudo apt-get install gcc python-dev python3-dev libsdl2-dev libffi-dev libomp5** <br>
-3. **$ sudo pip3 install tcod** <br>
+1. **$ sudo apt-get install build-essential cmake wget curl git checkinstall python3-all-dev python3-wheel python3-setuptools python3-pip python3-numpy libsdl2-dev libffi-dev libomp5** <br>
+2. **$ sudo pip3 install tcod** <br>
 
 Open a terminal window, and navigate to your Downloads directory: <br>
 1. **$ git clone https://github.com/XenonLab-Studio/The_Dungeon_of_Sin.git** <br>
