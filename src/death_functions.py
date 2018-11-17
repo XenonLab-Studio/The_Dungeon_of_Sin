@@ -18,10 +18,26 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 '''
 
 
-from enum import Enum
+import libtcodpy as libtcod
+
+from src.game_states import GameStates
 
 
-class GameStates(Enum):
-    PLAYERS_TURN = 1
-    ENEMY_TURN = 2
-    PLAYER_DEAD = 3
+def kill_player(player):
+    player.char = '%'
+    player.color = libtcod.dark_red
+
+    return 'You died!', GameStates.PLAYER_DEAD
+
+
+def kill_monster(monster):
+    death_message = '{0} is dead!'.format(monster.name.capitalize())
+
+    monster.char = '%'
+    monster.color = libtcod.dark_red
+    monster.blocks = False
+    monster.fighter = None
+    monster.ai = None
+    monster.name = 'remains of ' + monster.name
+
+    return death_message
