@@ -35,6 +35,7 @@
 [![GitHub issues](https://img.shields.io/github/issues/Naereen/StrapDown.js.svg)](https://github.com/XenonLab-Studio/The_Dungeon_of_Sin/issues/)
 [![GitHub pull-requests](https://img.shields.io/github/issues-pr/Naereen/StrapDown.js.svg)](https://github.com/XenonLab-Studio/The_Dungeon_of_Sin/pulls)
 [![GitHub contributors](https://img.shields.io/github/contributors/Naereen/StrapDown.js.svg)](https://github.com/XenonLab-Studio/The_Dungeon_of_Sin/graphs/contributors/)
+[![GitHub release](https://img.shields.io/github/release/Naereen/StrapDown.js.svg)](https://github.com/XenonLab-Studio/The_Dungeon_of_Sin/releases/)
 [![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://github.com/XenonLab-Studio/The_Dungeon_of_Sin/graphs/commit-activity)
 [![GPLv3 license](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0.en.html)
 
