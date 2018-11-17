@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 '''
 
+
 # definition of the support class for the "rooms".
 # This will be a base class that contains some information about the dimensions,
 # called Rect (short for rectangle).
