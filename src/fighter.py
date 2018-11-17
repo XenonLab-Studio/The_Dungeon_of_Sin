@@ -18,6 +18,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 '''
 
 
+import libtcodpy as libtcod
+
+from src.game_messages import Message
+
+
 # To create "killable" entities, instead of attacking the hit points to each Entity that I create,
 # I create a component called Fighter that will contain information related to combat,
 # such as HP, HP max, attack and defense. If an entity can fight, it will have this component attached to it,
@@ -46,11 +51,11 @@ class Fighter:
         damage = self.power - target.fighter.defense
 
         if damage > 0:
-            results.append({'message': '{0} attacks {1} for {2} hit points.'.format(
-                self.owner.name.capitalize(), target.name, str(damage))})
+            results.append({'message': Message('{0} attacks {1} for {2} hit points.'.format(
+                self.owner.name.capitalize(), target.name, str(damage)), libtcod.white)})
             results.extend(target.fighter.take_damage(damage))
         else:
-            results.append({'message': '{0} attacks {1} but does no damage.'.format(
-                self.owner.name.capitalize(), target.name)})
+            results.append({'message': Message('{0} attacks {1} but does no damage.'.format(
+                self.owner.name.capitalize(), target.name), libtcod.white)})
 
         return results

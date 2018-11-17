@@ -21,17 +21,18 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import libtcodpy as libtcod
 
 from src.game_states import GameStates
+from src.game_messages import Message
 
 
 def kill_player(player):
     player.char = '%'
     player.color = libtcod.dark_red
 
-    return 'You died!', GameStates.PLAYER_DEAD
+    return Message('You died!', libtcod.red), GameStates.PLAYER_DEAD
 
 
 def kill_monster(monster):
-    death_message = '{0} is dead!'.format(monster.name.capitalize())
+    death_message = Message('{0} is dead!'.format(monster.name.capitalize()), libtcod.orange)
 
     monster.char = '%'
     monster.color = libtcod.dark_red
