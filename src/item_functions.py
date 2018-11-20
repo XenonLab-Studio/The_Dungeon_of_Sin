@@ -18,12 +18,21 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 '''
 
 
-from enum import Enum
+import libtcodpy as libtcod
+
+from src.game_messages import Message
 
 
-class GameStates(Enum):
-    PLAYERS_TURN = 1
-    ENEMY_TURN = 2
-    PLAYER_DEAD = 3
-    SHOW_INVENTORY = 4
-    DROP_INVENTORY = 5
+def heal(*args, **kwargs):
+    entity = args[0]
+    amount = kwargs.get('amount')
+
+    results = []
+
+    if entity.fighter.hp == entity.fighter.max_hp:
+        results.append({'consumed': False, 'message': Message('You are already at full health', libtcod.yellow)})
+    else:
+        entity.fighter.heal(amount)
+        results.append({'consumed': True, 'message': Message('Your wounds start to feel better!', libtcod.green)})
+
+    return results

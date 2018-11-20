@@ -18,12 +18,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 '''
 
 
-from enum import Enum
-
-
-class GameStates(Enum):
-    PLAYERS_TURN = 1
-    ENEMY_TURN = 2
-    PLAYER_DEAD = 3
-    SHOW_INVENTORY = 4
-    DROP_INVENTORY = 5
+class Item:
+    def __init__(self, use_function=None, **kwargs):
+        self.use_function = use_function
+        self.function_kwargs = kwargs
