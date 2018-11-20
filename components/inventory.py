@@ -20,7 +20,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import libtcodpy as libtcod
 
-from src.game_messages import Message
+from game_messages import Message
 
 
 class Inventory:

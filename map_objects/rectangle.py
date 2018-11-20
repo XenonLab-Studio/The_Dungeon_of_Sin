@@ -17,17 +17,21 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 '''
 
-class Tile:
-    """
-    A tile on a map. It may or may not be blocked, and may or may not block sight.
-    """
-    def __init__(self, blocked, block_sight=None):
-        self.blocked = blocked
 
-        # By default, if a tile is blocked, it also blocks sight
-        if block_sight is None:
-            block_sight = blocked
+class Rect:
+    # a rectangle on the map. used to characterize a room.
+    def __init__(self, x, y, w, h):
+        self.x1 = x
+        self.y1 = y
+        self.x2 = x + w
+        self.y2 = y + h
 
-        self.block_sight = block_sight
+    def center(self):
+        center_x = int((self.x1 + self.x2) / 2)
+        center_y = int((self.y1 + self.y2) / 2)
+        return (center_x, center_y)
 
-        self.explored = False
+    def intersect(self, other):
+        # returns true if this rectangle intersects with another one
+        return (self.x1 <= other.x2 and self.x2 >= other.x1 and
+                self.y1 <= other.y2 and self.y2 >= other.y1)

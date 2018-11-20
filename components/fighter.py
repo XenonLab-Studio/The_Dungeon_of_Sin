@@ -20,21 +20,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import libtcodpy as libtcod
 
-from src.game_messages import Message
+from game_messages import Message
 
 
-# To create "killable" entities, instead of attacking the hit points to each Entity that I create,
-# I create a component called Fighter that will contain information related to combat,
-# such as HP, HP max, attack and defense. If an entity can fight, it will have this component attached to it,
-# and otherwise, it will not. This way of doing is called composition and is an alternative
-# to the typical inheritance-based programming model.
 class Fighter:
     def __init__(self, hp, defense, power):
         self.max_hp = hp
         self.hp = hp
         self.defense = defense
         self.power = power
-    
+
     def take_damage(self, amount):
         results = []
 
@@ -44,7 +39,7 @@ class Fighter:
             results.append({'dead': self.owner})
 
         return results
-    
+
     def heal(self, amount):
         self.hp += amount
 

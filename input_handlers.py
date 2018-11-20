@@ -20,7 +20,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import libtcodpy as libtcod
 
-from src.game_states import GameStates
+from game_states import GameStates
 
 
 def handle_keys(key, game_state):
@@ -33,23 +33,10 @@ def handle_keys(key, game_state):
 
     return {}
 
-def handle_inventory_keys(key):
-    index = key.c - ord('a')
-
-    if index >= 0:
-        return {'inventory_index': index}
-
-    if key.vk == libtcod.KEY_ENTER and key.lalt:
-        # Alt+Enter: toggle full screen
-        return {'fullscreen': True}
-    elif key.vk == libtcod.KEY_ESCAPE:
-        # Exit the menu
-        return {'exit': True}
-
-    return {}
 
 def handle_player_turn_keys(key):
     key_char = chr(key.c)
+
     # Movement keys
     if key.vk == libtcod.KEY_UP or key_char == 'k':
         return {'move': (0, -1)}
@@ -67,10 +54,13 @@ def handle_player_turn_keys(key):
         return {'move': (-1, 1)}
     elif key_char == 'n':
         return {'move': (1, 1)}
+
     if key_char == 'g':
         return {'pickup': True}
+
     elif key_char == 'i':
         return {'show_inventory': True}
+
     elif key_char == 'd':
         return {'drop_inventory': True}
 
@@ -84,11 +74,28 @@ def handle_player_turn_keys(key):
     # No key was pressed
     return {}
 
+
 def handle_player_dead_keys(key):
     key_char = chr(key.c)
 
     if key_char == 'i':
         return {'show_inventory': True}
+
+    if key.vk == libtcod.KEY_ENTER and key.lalt:
+        # Alt+Enter: toggle full screen
+        return {'fullscreen': True}
+    elif key.vk == libtcod.KEY_ESCAPE:
+        # Exit the menu
+        return {'exit': True}
+
+    return {}
+
+
+def handle_inventory_keys(key):
+    index = key.c - ord('a')
+
+    if index >= 0:
+        return {'inventory_index': index}
 
     if key.vk == libtcod.KEY_ENTER and key.lalt:
         # Alt+Enter: toggle full screen

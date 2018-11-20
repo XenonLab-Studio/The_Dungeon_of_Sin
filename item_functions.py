@@ -20,17 +20,19 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import libtcodpy as libtcod
 
+from game_messages import Message
 
-def initialize_fov(game_map):
-    fov_map = libtcod.map_new(game_map.width, game_map.height)
 
-    for y in range(game_map.height):
-        for x in range(game_map.width):
-            libtcod.map_set_properties(fov_map, x, y, not game_map.tiles[x][y].block_sight,
-                                       not game_map.tiles[x][y].blocked)
+def heal(*args, **kwargs):
+    entity = args[0]
+    amount = kwargs.get('amount')
 
-    return fov_map
+    results = []
 
-def recompute_fov(fov_map, x, y, radius, light_walls=True, algorithm=0):
-    libtcod.map_compute_fov(fov_map, x, y, radius, light_walls, algorithm)
+    if entity.fighter.hp == entity.fighter.max_hp:
+        results.append({'consumed': False, 'message': Message('You are already at full health', libtcod.yellow)})
+    else:
+        entity.fighter.heal(amount)
+        results.append({'consumed': True, 'message': Message('Your wounds start to feel better!', libtcod.green)})
 
+    return results

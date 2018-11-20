@@ -49,6 +49,7 @@ def menu(con, header, options, width, screen_width, screen_height):
     y = int(screen_height / 2 - height / 2)
     libtcod.console_blit(window, 0, 0, width, height, 0, x, y, 1.0, 0.7)
 
+
 def inventory_menu(con, header, inventory, inventory_width, screen_width, screen_height):
     # show a menu with each item of the inventory as an option
     if len(inventory.items) == 0:

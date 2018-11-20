@@ -18,27 +18,17 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 '''
 
 
-import libtcodpy as libtcod
+class Tile:
+    """
+    A tile on a map. It may or may not be blocked, and may or may not block sight.
+    """
+    def __init__(self, blocked, block_sight=None):
+        self.blocked = blocked
 
-from src.game_states import GameStates
-from src.game_messages import Message
+        # By default, if a tile is blocked, it also blocks sight
+        if block_sight is None:
+            block_sight = blocked
 
+        self.block_sight = block_sight
 
-def kill_player(player):
-    player.char = '%'
-    player.color = libtcod.dark_red
-
-    return Message('You died!', libtcod.red), GameStates.PLAYER_DEAD
-
-
-def kill_monster(monster):
-    death_message = Message('{0} is dead!'.format(monster.name.capitalize()), libtcod.orange)
-
-    monster.char = '%'
-    monster.color = libtcod.dark_red
-    monster.blocks = False
-    monster.fighter = None
-    monster.ai = None
-    monster.name = 'remains of ' + monster.name
-
-    return death_message
+        self.explored = False
