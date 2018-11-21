@@ -32,8 +32,6 @@
 <br>
 
 [![made-with-python](https://img.shields.io/badge/Made%20with-Python-1f425f.svg)](https://www.python.org/)
-[![GitHub issues](https://img.shields.io/github/issues/Naereen/StrapDown.js.svg)](https://github.com/XenonLab-Studio/The_Dungeon_of_Sin/issues/)
-[![GitHub pull-requests](https://img.shields.io/github/issues-pr/Naereen/StrapDown.js.svg)](https://github.com/XenonLab-Studio/The_Dungeon_of_Sin/pulls)
 [![GitHub contributors](https://img.shields.io/github/contributors/Naereen/StrapDown.js.svg)](https://github.com/XenonLab-Studio/The_Dungeon_of_Sin/graphs/contributors/)
 [![GitHub release](https://img.shields.io/github/release/Naereen/StrapDown.js.svg)](https://github.com/XenonLab-Studio/The_Dungeon_of_Sin/releases/)
 [![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://github.com/XenonLab-Studio/The_Dungeon_of_Sin/graphs/commit-activity)
